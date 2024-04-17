@@ -1,26 +1,48 @@
 package com.example.m;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.ViewFlipper;
 
 public class mainscreen extends AppCompatActivity {
+
+    CardView imagesCard;
+    ViewFlipper flipper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainscreen);
 
-        // Start MainActivity after a short delay
-        new Handler().postDelayed(new Runnable() {
+        imagesCard = findViewById(R.id.imageCard);
+        imagesCard.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                Intent intent = new Intent(mainscreen.this, MainActivity.class);
+            public void onClick(View view) {
+                Intent intent = new Intent(mainscreen.this, ImageActivity.class);
                 startActivity(intent);
-                finish(); // Finish mainscreen activity
             }
-        }, 1); // Reduce the delay to 1 second for smoother transition
+        });
+
+        flipper = findViewById(R.id.flipper);
+        int imgArray[] = {R.drawable.slide1, R.drawable.slide2, R.drawable.slide3};
+        for (int img : imgArray) {
+            showImage(img);
+        }
+    }
+
+    public void showImage(int img) {
+        ImageView imageView = new ImageView(this);
+        imageView.setBackgroundResource(img);
+        flipper.addView(imageView);
+        flipper.setFlipInterval(3000);
+        flipper.setAutoStart(true);
+        flipper.setInAnimation(this, android.R.anim.slide_in_left);
+        flipper.setOutAnimation(this, android.R.anim.slide_out_right);
     }
 }
