@@ -32,7 +32,7 @@ public class IntroductoryActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(IntroductoryActivity.this, mainscreen.class);
+                Intent intent = new Intent(IntroductoryActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish(); // Optional, to close this activity if you don't want to return to it
             }

@@ -24,7 +24,7 @@ public class mainscreen extends AppCompatActivity {
         imagesCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mainscreen.this, ImageActivity.class);
+                Intent intent = new Intent(mainscreen.this, MedicineActivity.class);
                 startActivity(intent);
             }
         });
