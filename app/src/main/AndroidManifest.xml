@@ -16,7 +16,7 @@
             android:name=".MedicineAddEditActivity"
             android:exported="false" />
         <activity
-            android:name=".IntroductoryActivity"
+            android:name=".MedicineActivity"
             android:exported="false" />
         <activity
             android:name=".SplashScreen"
@@ -28,7 +28,7 @@
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".MedicineActivity"
+            android:name=".IntroductoryActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

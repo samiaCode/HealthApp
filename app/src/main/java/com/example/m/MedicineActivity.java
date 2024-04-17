@@ -4,18 +4,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
 public class MedicineActivity extends AppCompatActivity {
     private RecyclerView medRecView;
+    private FloatingActionButton addMedFBTN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medicine);
 
+        addMedFBTN = findViewById(R.id.addMedFBTN);
         medRecView = findViewById(R.id.MedRV);
         //sample data
         ArrayList<Medicine> medicines = new ArrayList<>();
@@ -31,5 +37,14 @@ public class MedicineActivity extends AppCompatActivity {
         adapter.setMedicines(medicines);
         medRecView.setAdapter(adapter);
         medRecView.setLayoutManager(new LinearLayoutManager(this));
+
+        addMedFBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MedicineActivity.this, MedicineAddEditActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }
