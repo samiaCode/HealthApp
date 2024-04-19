@@ -21,10 +21,18 @@ public class mainscreen extends AppCompatActivity {
         setContentView(R.layout.activity_mainscreen);
 
         imagesCard = findViewById(R.id.imageCard);
+        imagesCard = findViewById(R.id.audioCard);
         imagesCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mainscreen.this, MedicineActivity.class);
+                startActivity(intent);
+            }
+        });
+        imagesCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mainscreen.this, HabitsTracker.class);
                 startActivity(intent);
             }
         });
