@@ -21,6 +21,7 @@ public class mainscreen extends AppCompatActivity {
         setContentView(R.layout.activity_mainscreen);
 
         imagesCard = findViewById(R.id.imageCard);
+        imagesCard = findViewById(R.id.audioCard);
         imagesCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -28,9 +29,16 @@ public class mainscreen extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        imagesCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mainscreen.this, HabitsTracker.class);
+                startActivity(intent);
+            }
+        });
 
         flipper = findViewById(R.id.flipper);
-        int imgArray[] = {R.drawable.slide1, R.drawable.slide2, R.drawable.slide3};
+        int imgArray[] = {R.drawable.slide1, R.drawable.slide2, R.drawable.slide3, R.drawable.slide4, R.drawable.slide5, R.drawable.slide6};
         for (int img : imgArray) {
             showImage(img);
         }

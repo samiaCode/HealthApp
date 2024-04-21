@@ -11,12 +11,12 @@
 
     <ViewFlipper
         android:id="@+id/flipper"
-        android:layout_width="364dp"
-        android:layout_height="162dp"
+        android:layout_width="378dp"
+        android:layout_height="255dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
-        android:layout_marginTop="156dp" />
+        android:layout_marginTop="92dp" />
 
     <GridLayout
         android:id="@+id/gridLayout"
@@ -26,10 +26,10 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="1dp"
+        android:layout_marginStart="6dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="21dp"
-        android:layout_marginBottom="45dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="29dp"
         android:columnCount="3"
         android:rowCount="2">
 
@@ -224,4 +224,6 @@
         </androidx.cardview.widget.CardView>
 
     </GridLayout>
+
+
 </RelativeLayout>
