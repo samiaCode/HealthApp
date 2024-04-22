@@ -7,11 +7,11 @@
 
     <ListView
         android:id="@+id/habitsListView"
-        android:layout_width="299dp"
-        android:layout_height="492dp"
+        android:layout_width="260dp"
+        android:layout_height="438dp"
         android:layout_above="@+id/buttonsLayout"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="94dp"
+        android:layout_marginBottom="121dp"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
         android:listSelector="@android:color/transparent" />
