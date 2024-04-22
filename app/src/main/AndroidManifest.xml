@@ -45,7 +45,7 @@
             android:exported="true"/>
         <activity
             android:name=".HabitsTracker"
-            android:exported="true" />
+            android:exported="false" />
     </application>
 
 </manifest>

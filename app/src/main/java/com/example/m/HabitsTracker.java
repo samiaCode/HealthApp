@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -22,8 +23,6 @@ public class HabitsTracker extends AppCompatActivity {
 
     private ListView TaskList;
     private ArrayAdapter<String> arrAdapter;
-    private static final int MENU_ADD_TASK = 1;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,62 +37,54 @@ public class HabitsTracker extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
-        menu.add(Menu.NONE, MENU_ADD_TASK, Menu.NONE, "Add Habit");
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case MENU_ADD_TASK:
-                showAddTaskDialog();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.habit) {
+            showAddTaskDialog();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 
     private void showAddTaskDialog() {
         final EditText taskEdit = new EditText(this);
         AlertDialog dialog = new AlertDialog.Builder(this)
-                .setTitle("Add a new Habit")
-                .setMessage("What habit do you want to do next?")
+                .setTitle("Add a new task")
+                .setMessage("What do you want to do next?")
                 .setView(taskEdit)
-                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String task = taskEdit.getText().toString();
-                        addTask(task);
-                    }
+                .setPositiveButton("Add", (dialogInterface, which) -> {
+                    String task = String.valueOf(taskEdit.getText());
+                    addTask(task);
                 })
                 .setNegativeButton("Cancel", null)
                 .create();
         dialog.show();
     }
 
-    public void deleteTask(View view) {
-        View parent = (View) view.getParent();
-        TextView taskTextView = parent.findViewById(R.id.title_task);
-        String task = String.valueOf(taskTextView.getText());
-        arrAdapter.remove(task);
-        arrAdapter.notifyDataSetChanged();
+    private void addTask(String task) {
+        if (task.trim().isEmpty()) {
+            Toast.makeText(this, "Task cannot be empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        arrAdapter.add(task);
     }
 
-    private void addTask(String task) {
-        arrAdapter.add(task);
-        arrAdapter.notifyDataSetChanged();
+    public void deleteTask(int position) {
+        arrAdapter.remove(arrAdapter.getItem(position));
     }
 
     private void updateUI() {
         ArrayList<String> taskList = new ArrayList<>();
 
-
         if (arrAdapter == null) {
-            arrAdapter = new ArrayAdapter<>(this, R.layout.todo_task, R.id.title_task, taskList);
+            arrAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, taskList);
             TaskList.setAdapter(arrAdapter);
         } else {
-            arrAdapter.clear();
-            arrAdapter.addAll(taskList);
             arrAdapter.notifyDataSetChanged();
         }
     }
