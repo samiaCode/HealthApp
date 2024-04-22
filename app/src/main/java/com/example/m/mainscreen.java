@@ -34,7 +34,7 @@ public class mainscreen extends AppCompatActivity {
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mainscreen.this, HabitsTracker.class);
+                Intent intent = new Intent(mainscreen.this, ListViewActivity.class);
                 startActivity(intent);
             }
         });
