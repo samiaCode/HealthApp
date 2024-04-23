@@ -24,19 +24,12 @@ public class mainscreen extends AppCompatActivity {
         setContentView(R.layout.activity_mainscreen);
 
         // Initialize views
-        imagesCard = findViewById(R.id.imageCard);
         image = findViewById(R.id.audioCard);
         flipper = findViewById(R.id.flipper);
         logoutButton = findViewById(R.id.logoutButton);
 
         // Set click listeners for card views
-        imagesCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mainscreen.this, MedicineActivity.class);
-                startActivity(intent);
-            }
-        });
+
 
         image.setOnClickListener(new View.OnClickListener() {
             @Override
