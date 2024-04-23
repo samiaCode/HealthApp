@@ -70,12 +70,13 @@
 
                 <ImageView
                     android:layout_width="50dp"
-                    android:layout_height="50dp" />
+                    android:layout_height="50dp"
+                    android:background="@drawable/medication_liquid_24"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="MED"
+                    android:text="Medicines"
                     android:textAlignment="center"
                     android:textColor="@color/blue"
                     android:textStyle="bold" />
@@ -139,12 +140,13 @@
 
                 <ImageView
                     android:layout_width="50dp"
-                    android:layout_height="50dp" />
+                    android:layout_height="50dp"
+                    android:background="@drawable/med_history_icon"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="MED"
+                    android:text="Med History"
                     android:textAlignment="center"
                     android:textColor="@color/blue"
                     android:textStyle="bold" />
@@ -170,15 +172,17 @@
 
                 <ImageView
                     android:layout_width="50dp"
-                    android:layout_height="50dp" />
+                    android:layout_height="50dp"
+                    android:background="@drawable/account_icon"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="MED"
+                    android:text="Account"
                     android:textAlignment="center"
                     android:textColor="@color/blue"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

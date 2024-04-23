@@ -8,15 +8,21 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.nio.FloatBuffer;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class MedicineAddEditActivity extends AppCompatActivity {
 
     private TextView timeTV, dateTV;
     private Button timeBTN, dateBTN;
+    private EditText ed;
+    Date date;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +32,13 @@ public class MedicineAddEditActivity extends AppCompatActivity {
         timeBTN = (Button) findViewById(R.id.setTimeBTN);
         dateTV = (TextView) findViewById(R.id.dateTv);
         dateBTN = (Button) findViewById(R.id.setDateBTN);
+        ed = (EditText) findViewById(R.id.editTextText);
+        /*
+        SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+        String currentDateAndTime = df.format(new Date());
+        ed.setText(currentDateAndTime);
+
+         */
         timeBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
