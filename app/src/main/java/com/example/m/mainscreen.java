@@ -12,7 +12,7 @@ import android.widget.ViewFlipper;
 
 public class mainscreen extends AppCompatActivity {
 
-    CardView imagesCard;
+    CardView imagesCard,imagesCard2;
     ViewFlipper flipper;
 
     @Override
@@ -21,7 +21,7 @@ public class mainscreen extends AppCompatActivity {
         setContentView(R.layout.activity_mainscreen);
 
         imagesCard = findViewById(R.id.imageCard);
-        imagesCard = findViewById(R.id.audioCard);
+        imagesCard2 = findViewById(R.id.audioCard);
         imagesCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -29,7 +29,7 @@ public class mainscreen extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        imagesCard.setOnClickListener(new View.OnClickListener() {
+        imagesCard2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mainscreen.this, HabitsTracker.class);

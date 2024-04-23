@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MedicineAddEditActivity">
+    tools:context=".MedicineAddEditActivity"
+    android:background="@drawable/designs">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -85,7 +86,8 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/textView"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:entries="@array/medicine_type"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -133,23 +135,24 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="10dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="200dp"
-                    android:layout_height="match_parent">
+                    android:layout_height="120dp">
+
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="75dp"
+                        android:layout_height="match_parent"
                         android:layout_marginStart="32dp"
                         android:layout_marginEnd="10dp"
+                        android:background="@drawable/info_box_shape"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:background="@drawable/info_box_shape">
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <TextView
                             android:id="@+id/textView32"
@@ -157,31 +160,47 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:layout_marginTop="8dp"
-                            android:text="How to use"
+                            android:text="When to take"
+                            android:textSize="18dp"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            android:textSize="18dp"/>
+                            />
 
-                        <EditText
-                            android:id="@+id/editTextText2"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_marginStart="8dp"
+                        <TextView
+                            android:id="@+id/timeTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_marginBottom="16dp"
-                            android:ems="10"
-                            android:inputType="text"
+                            android:textSize="18dp"
+                            android:visibility="visible"
+                            app:layout_constraintBottom_toTopOf="@+id/setTimeBTN"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView32"
+                            android:layout_marginTop="10dp"/>
+
+                        <Button
+                            android:id="@+id/setTimeBTN"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:text="Set Time"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent" />
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+
+                             />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
+                    android:layout_width="200dp"
+                    android:layout_height="120dp">
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="75dp"
+                        android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
                         android:layout_marginEnd="32dp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -196,21 +215,37 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:layout_marginTop="8dp"
-                            android:text="Set dose"
+                            android:text="Set starting date"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             android:textSize="18dp"/>
 
-                        <EditText
-                            android:id="@+id/editTextText4"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_marginStart="8dp"
+                        <TextView
+                            android:id="@+id/dateTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_marginBottom="16dp"
-                            android:ems="10"
-                            android:inputType="text"
+                            android:textSize="18dp"
+                            android:visibility="visible"
+                            app:layout_constraintBottom_toTopOf="@+id/setDateBTN"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView4"
+                            android:layout_marginTop="10dp"/>
+                        <Button
+                            android:id="@+id/setDateBTN"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:text="Set Time"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent" />
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+
+                            />
+
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -241,7 +276,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:layout_marginTop="8dp"
-                            android:text="Starting Date"
+                            android:text="Set Dose"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             android:textSize="18dp"/>
