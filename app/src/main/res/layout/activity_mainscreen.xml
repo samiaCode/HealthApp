@@ -11,12 +11,12 @@
 
     <ViewFlipper
         android:id="@+id/flipper"
-        android:layout_width="394dp"
-        android:layout_height="347dp"
+        android:layout_width="376dp"
+        android:layout_height="293dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
-        android:layout_marginTop="0dp" />
+        android:layout_marginTop="36dp" />
 
     <GridLayout
         android:id="@+id/gridLayout"
