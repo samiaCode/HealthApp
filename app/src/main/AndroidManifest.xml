@@ -45,8 +45,8 @@
             android:name=".MedicineActivity"
             android:exported="true"/>
         <activity
-            android:name=".HabitsTracker"
-            android:exported="true" />
+            android:name=".ListViewActivity"
+            android:exported="false"/>
     </application>
 
 </manifest>
