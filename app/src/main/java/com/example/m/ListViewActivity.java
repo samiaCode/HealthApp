@@ -97,6 +97,14 @@ public class ListViewActivity extends AppCompatActivity {
                 showPreviousHabits();
             }
         });
+
+        Button backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private void showAddHabitDialog() {

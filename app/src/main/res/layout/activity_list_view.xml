@@ -7,6 +7,18 @@
     tools:context=".ListViewActivity"
     android:background="@drawable/bg">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="30dp"
+        android:text="Healthy Habits Tracker"
+        android:textColor="@color/blue"
+
+        android:textSize="30dp" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/imageCard"
         android:layout_width="272dp"
@@ -62,6 +74,19 @@
             android:text="Previous Habits"
             android:layout_marginLeft="16dp"
             android:backgroundTint="@color/blue"/>
+
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/blue"
+            android:onClick="onBackButtonClick"
+            android:text="Back"
+            android:layout_marginBottom="18dp"/>
 
     </LinearLayout>
 

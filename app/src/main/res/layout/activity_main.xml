@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
     tools:context=".MainActivity">
 
     <Button
@@ -74,13 +73,6 @@
 
 
     </LinearLayout>
-
-    <ImageView
-        android:layout_width="196dp"
-        android:layout_height="140dp"
-        android:background="@drawable/shape"
-        tools:layout_editor_absoluteX="2dp"
-        tools:layout_editor_absoluteY="-2dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
