@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ViewFlipper;
 
@@ -15,14 +16,20 @@ public class mainscreen extends AppCompatActivity {
     CardView imagesCard;
     CardView image;
     ViewFlipper flipper;
+    Button logoutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainscreen);
 
+        // Initialize views
         imagesCard = findViewById(R.id.imageCard);
+        image = findViewById(R.id.audioCard);
+        flipper = findViewById(R.id.flipper);
+        logoutButton = findViewById(R.id.logoutButton);
 
+        // Set click listeners for card views
         imagesCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -30,7 +37,7 @@ public class mainscreen extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        image = findViewById(R.id.audioCard);
+
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -39,7 +46,16 @@ public class mainscreen extends AppCompatActivity {
             }
         });
 
-        flipper = findViewById(R.id.flipper);
+        // Set click listener for logout button
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mainscreen.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // Display images in the ViewFlipper
         int imgArray[] = {R.drawable.slide1, R.drawable.slide2, R.drawable.slide3, R.drawable.slide4, R.drawable.slide5, R.drawable.slide6};
         for (int img : imgArray) {
             showImage(img);

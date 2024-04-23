@@ -12,5 +12,6 @@
     <string name="desc_two">Instant notifications help ensure that users do not miss their medication doses and health habits tracking.</string>
     <string name="desc_three">A habit health tracker is essential for individuals looking to improve the overall well-being by monitoring and managing their habits effectively. </string>
     <string name="desc_fourth">Regularly reviewing health progress allows individuals to assess whether they are making progress toward their health goals. </string>
+    <string name="warning_empty_field">This field is required.</string>
 
 </resources>
