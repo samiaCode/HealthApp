@@ -23,7 +23,6 @@ public class mainscreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainscreen);
 
-        // Initialize views
         image = findViewById(R.id.audioCard);
         accountPage = findViewById(R.id.accountCard);
         historyPage = findViewById(R.id.medHistory);
@@ -31,7 +30,6 @@ public class mainscreen extends AppCompatActivity {
         flipper = findViewById(R.id.flipper);
         logoutButton = findViewById(R.id.logoutButton);
 
-        // Set click listeners for card views
 
 
         accountPage.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +64,6 @@ public class mainscreen extends AppCompatActivity {
             }
         });
 
-        // Set click listener for logout button
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,7 +72,6 @@ public class mainscreen extends AppCompatActivity {
             }
         });
 
-        // Display images in the ViewFlipper
         int imgArray[] = {R.drawable.slide1, R.drawable.slide2, R.drawable.slide3, R.drawable.slide4, R.drawable.slide5, R.drawable.slide6};
         for (int img : imgArray) {
             showImage(img);
