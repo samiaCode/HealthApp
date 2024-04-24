@@ -14,7 +14,7 @@ import android.widget.ViewFlipper;
 public class mainscreen extends AppCompatActivity {
 
     CardView imagesCard;
-    CardView image;
+    CardView image, accountPage, medicinePage, historyPage;
     ViewFlipper flipper;
     Button logoutButton;
 
@@ -25,12 +25,39 @@ public class mainscreen extends AppCompatActivity {
 
         // Initialize views
         image = findViewById(R.id.audioCard);
+        accountPage = findViewById(R.id.accountCard);
+        historyPage = findViewById(R.id.medHistory);
+        medicinePage = findViewById(R.id.medicinePage);
         flipper = findViewById(R.id.flipper);
         logoutButton = findViewById(R.id.logoutButton);
 
         // Set click listeners for card views
 
 
+        accountPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mainscreen.this, Account.class);
+                startActivity(intent);
+
+            }
+        });
+        historyPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mainscreen.this, MedicineHistory.class);
+                startActivity(intent);
+
+            }
+        });
+
+        medicinePage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mainscreen.this, MedicineActivity.class);
+                startActivity(intent);
+            }
+        });
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

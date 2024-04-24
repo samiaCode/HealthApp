@@ -3,14 +3,10 @@ package com.example.m;
 import static com.example.m.MedicineAddEditActivity.FILE_NAME;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -21,19 +17,18 @@ import java.util.ArrayList;
 
 import Model.Medicine;
 
-public class MedicineActivity extends AppCompatActivity {
-    private RecyclerView medRecView;
-    private FloatingActionButton addMedFBTN;
-
+public class MedicineHistory extends AppCompatActivity {
+    private ListView medList;
+    private ArrayAdapter<Medicine> medAdapter;
+    private ArrayList<Medicine> medicines;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_medicine);
+        setContentView(R.layout.activity_medicine_history);
 
-        addMedFBTN = findViewById(R.id.addMedFBTN);
-        medRecView = findViewById(R.id.MedRV);
-        //sample data
-        ArrayList<Medicine> medicines = new ArrayList<>();
+        medList = findViewById(R.id.medList);
+        medicines = new ArrayList<>();
+
         try {
             FileInputStream fis = openFileInput(FILE_NAME);
             InputStreamReader isr = new InputStreamReader(fis);
@@ -53,22 +48,9 @@ public class MedicineActivity extends AppCompatActivity {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        medAdapter = new ArrayAdapter<Medicine>(this, com.airbnb.lottie.R.layout.support_simple_spinner_dropdown_item,medicines);
 
 
-        MedicineRecViewAdapter adapter = new MedicineRecViewAdapter();
-        adapter.setMedicines(medicines);
-        medRecView.setAdapter(adapter);
-        medRecView.setLayoutManager(new LinearLayoutManager(this));
-
-
-
-        addMedFBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MedicineActivity.this, MedicineAddEditActivity.class);
-                startActivity(intent);
-            }
-        });
-
+        medList.setAdapter(medAdapter);
     }
 }

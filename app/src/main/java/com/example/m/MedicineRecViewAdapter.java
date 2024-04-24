@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import Model.Medicine;
+
 public class MedicineRecViewAdapter extends RecyclerView.Adapter<MedicineRecViewAdapter.ViewHolder>{
     private ArrayList<Medicine> medicines = new ArrayList<>();
     public MedicineRecViewAdapter() {
