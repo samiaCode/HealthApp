@@ -120,6 +120,13 @@
                 android:inputType="phone"
                 android:background="@drawable/custom_edittext"
                 android:padding="8dp"/>
+            <EditText
+                android:id="@+id/passwordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:background="@drawable/custom_edittext"
+                android:padding="8dp"/>
 
         </LinearLayout>
 

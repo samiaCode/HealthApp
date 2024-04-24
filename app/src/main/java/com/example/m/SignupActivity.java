@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -17,6 +18,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -27,6 +31,7 @@ public class SignupActivity extends AppCompatActivity {
     Button dobButton, saveButton, loginButton;
     LinearLayout formLayout;
     RadioGroup genderRadioGroup;
+    EditText passwordEditText;
 
 
     @Override
@@ -45,6 +50,7 @@ public class SignupActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.loginButton);
         formLayout = findViewById(R.id.formLayout);
         genderRadioGroup = findViewById(R.id.genderRadioGroup);
+        passwordEditText=findViewById(R.id.passwordEditText);
 
         dobButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +69,7 @@ public class SignupActivity extends AppCompatActivity {
                 String dob = dobButton.getText().toString().trim();
                 String email = emailEditText.getText().toString().trim();
                 String phone = phoneEditText.getText().toString().trim();
+                String pass=passwordEditText.getText().toString().trim();
                 int weight = weightSeekBar.getProgress();
                 int selectedGenderId = genderRadioGroup.getCheckedRadioButtonId();
 
@@ -104,6 +111,15 @@ public class SignupActivity extends AppCompatActivity {
                     } else {
                         gender = "Female";
                     }
+                    if (TextUtils.isEmpty(name)) {
+                        isEmptyField = true;
+                        passwordEditText.setError(getString(R.string.warning_empty_field));
+                    }
+
+                    String password = generateHash(passwordEditText.getText().toString().trim());
+
+                    saveUserData(email, password);
+
                     String message = "Name: " + name + "\n" +
                             "Age: " + age + "\n" +
                             "Date of Birth: " + dob + "\n" +
@@ -139,12 +155,42 @@ public class SignupActivity extends AppCompatActivity {
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        // Display selected date in the dobButton or perform any required action
                         String selectedDate = dayOfMonth + "/" + (month + 1) + "/" + year;
                         dobButton.setText(selectedDate);
                     }
                 },
                 year, month, day);
         datePickerDialog.show();
+    }
+
+    private String generateHash(String password) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] encodedHash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+            return bytesToHex(encodedHash);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private String bytesToHex(byte[] hash) {
+        StringBuilder hexString = new StringBuilder();
+        for (byte b : hash) {
+            String hex = Integer.toHexString(0xff & b);
+            if (hex.length() == 1) {
+                hexString.append('0');
+            }
+            hexString.append(hex);
+        }
+        return hexString.toString();
+    }
+
+    private void saveUserData(String email, String hashedPassword) {
+        SharedPreferences sharedPreferences = getSharedPreferences("UserData", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("email", email);
+        editor.putString("password", hashedPassword);
+        editor.apply();
     }
 }
