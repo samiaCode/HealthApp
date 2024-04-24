@@ -2,6 +2,7 @@ package com.example.m;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,10 +21,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -32,15 +38,20 @@ public class ListViewActivity extends AppCompatActivity {
     private ListView habitsListView;
     private ArrayList<Habit> habitsList;
     private ArrayAdapter<Habit> habitsAdapter;
-    private HashMap<Habit, Date> checkedHabitsMap; // HashMap to store checked habits with dates
+    private HashMap<Habit, Date> checkedHabitsMap;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
 
+        sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+
+        loadDataFromSharedPreferences();
+
         habitsListView = findViewById(R.id.habitsListView);
-        habitsList = new ArrayList<>();
+
         habitsAdapter = new ArrayAdapter<Habit>(this, R.layout.list_item_habit, habitsList) {
             @NonNull
             @Override
@@ -57,10 +68,8 @@ public class ListViewActivity extends AppCompatActivity {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         if (isChecked) {
-                            // When a habit is checked, add it to the checkedHabitsMap with the current date
                             checkedHabitsMap.put(habit, new Date());
                         } else {
-                            // If habit is unchecked, remove it from the checkedHabitsMap
                             checkedHabitsMap.remove(habit);
                         }
                     }
@@ -80,7 +89,7 @@ public class ListViewActivity extends AppCompatActivity {
         };
         habitsListView.setAdapter(habitsAdapter);
 
-        checkedHabitsMap = new HashMap<>(); // Initialize the checkedHabitsMap
+        checkedHabitsMap = new HashMap<>();
 
         Button addButton = findViewById(R.id.addButton);
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +116,96 @@ public class ListViewActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        saveDataToSharedPreferences();
+    }
+
+    private void saveDataToSharedPreferences() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("habitsList", serializeHabitsList());
+        editor.putString("checkedHabitsMap", serializeCheckedHabitsMap());
+        editor.apply();
+    }
+
+    private String serializeHabitsList() {
+        try {
+            JSONArray jsonArray = new JSONArray();
+            for (Habit habit : habitsList) {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("habitName", habit.getHabitName());
+                jsonArray.put(jsonObject);
+            }
+            return jsonArray.toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private String serializeCheckedHabitsMap() {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            for (Map.Entry<Habit, Date> entry : checkedHabitsMap.entrySet()) {
+                Habit habit = entry.getKey();
+                Date date = entry.getValue();
+                JSONObject habitJson = new JSONObject();
+                habitJson.put("habitName", habit.getHabitName());
+                jsonObject.put(habitJson.toString(), date.toString());
+            }
+            return jsonObject.toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private void loadDataFromSharedPreferences() {
+        habitsList = deserializeHabitsList(sharedPreferences.getString("habitsList", ""));
+        checkedHabitsMap = deserializeCheckedHabitsMap(sharedPreferences.getString("checkedHabitsMap", ""));
+
+        if (habitsList == null) {
+            habitsList = new ArrayList<>();
+        }
+        if (checkedHabitsMap == null) {
+            checkedHabitsMap = new HashMap<>();
+        }
+    }
+
+    private ArrayList<Habit> deserializeHabitsList(String json) {
+        ArrayList<Habit> list = new ArrayList<>();
+        try {
+            JSONArray jsonArray = new JSONArray(json);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                String habitName = jsonObject.getString("habitName");
+                list.add(new Habit(habitName));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    private HashMap<Habit, Date> deserializeCheckedHabitsMap(String json) {
+        HashMap<Habit, Date> map = new HashMap<>();
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            Iterator<String> keys = jsonObject.keys();
+            while (keys.hasNext()) {
+                String key = keys.next();
+                String value = jsonObject.getString(key);
+                Habit habit = new Habit(new JSONObject(key).getString("habitName"));
+                Date date = new Date(value);
+                map.put(habit, date);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return map;
+    }
+
     private void showAddHabitDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Add Habit");
@@ -119,7 +218,7 @@ public class ListViewActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String habitName = input.getText().toString();
-                Habit habit = new Habit(habitName, new Date());
+                Habit habit = new Habit(habitName);
                 habitsList.add(habit);
                 habitsAdapter.notifyDataSetChanged();
             }
@@ -135,34 +234,27 @@ public class ListViewActivity extends AppCompatActivity {
     }
 
     private void showPreviousHabits() {
-        // Get the current date to set as the initial date in the DatePicker
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        // Show DatePicker dialog for date selection
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, final int year, final int month, final int dayOfMonth) {
-                // Get the selected date
                 final Calendar selectedDate = Calendar.getInstance();
                 selectedDate.set(year, month, dayOfMonth);
 
-                // Filter habits list based on selected date
                 List<Habit> habitsForDate = filterHabitsForDate(selectedDate.getTime());
 
-                // Show checked habits for the selected date
                 showCheckedHabitsForDate(habitsForDate);
 
-                // Save checked habits with the selected date
                 saveCheckedHabitsWithDate(selectedDate.getTime(), habitsForDate);
             }
         }, year, month, day);
         datePickerDialog.show();
     }
 
-    // Method to filter habits list based on selected date
     private List<Habit> filterHabitsForDate(Date date) {
         List<Habit> habitsForDate = new ArrayList<>();
         for (Map.Entry<Habit, Date> entry : checkedHabitsMap.entrySet()) {
@@ -175,7 +267,6 @@ public class ListViewActivity extends AppCompatActivity {
         return habitsForDate;
     }
 
-    // Method to check if two dates are on the same day
     private boolean isSameDate(Date date1, Date date2) {
         Calendar cal1 = Calendar.getInstance();
         cal1.setTime(date1);
@@ -186,7 +277,6 @@ public class ListViewActivity extends AppCompatActivity {
                 cal1.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH);
     }
 
-    // Method to show checked habits for the selected date
     private void showCheckedHabitsForDate(List<Habit> habitsForDate) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Checked Habits");
@@ -211,13 +301,10 @@ public class ListViewActivity extends AppCompatActivity {
         builder.show();
     }
 
-    // Method to save checked habits with the date
     private void saveCheckedHabitsWithDate(Date date, List<Habit> habitsForDate) {
-        // Here, you can save the checked habits with their corresponding date
-        // For example, you can store them in SharedPreferences, a database, or any other storage mechanism
-        // For demonstration purposes, let's print them
+
         for (Habit habit : habitsForDate) {
-            Log.d("Checked Habit", habit.getHabitName() + " - " + date.toString());
+            System.out.println("Checked Habit: " + habit.getHabitName() + " - " + date.toString());
         }
     }
 }

@@ -4,18 +4,16 @@ import java.util.Date;
 
 public class Habit {
     private String habitName;
-    private Date completionDate;
 
-    public Habit(String habitName, Date completionDate) {
+    public Habit(String habitName) {
         this.habitName = habitName;
-        this.completionDate = completionDate;
     }
 
     public String getHabitName() {
         return habitName;
     }
 
-    public Date getCompletionDate() {
-        return completionDate;
+    public void setHabitName(String habitName) {
+        this.habitName = habitName;
     }
 }
