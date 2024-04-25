@@ -20,6 +20,7 @@ public class Account extends AppCompatActivity {
     ImageView image;
     private Button pick;
     private ActivityResultLauncher<Intent> launcher;
+    private Button logoutButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +28,8 @@ public class Account extends AppCompatActivity {
         backBTN = (ImageButton) findViewById(R.id.accountBackBTN);
         pick = findViewById(R.id.imageBTN);
         image = findViewById(R.id.imageView2);
+        logoutButton = findViewById(R.id.button);
+
 
 
         backBTN.setOnClickListener(new View.OnClickListener() {
@@ -71,5 +74,17 @@ public class Account extends AppCompatActivity {
 
 
 
-    }
+            logoutButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Account.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+
+
+
+
+        }
 }
