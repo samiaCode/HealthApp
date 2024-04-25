@@ -25,14 +25,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class SignupActivity extends AppCompatActivity {
-    EditText nameEditText, ageEditText, emailEditText, phoneEditText;
+    EditText nameEditText, ageEditText, emailEditText, phoneEditText, passwordEditText;
     SeekBar weightSeekBar;
     TextView weightValueTextView;
     Button dobButton, saveButton, loginButton;
     LinearLayout formLayout;
     RadioGroup genderRadioGroup;
-    EditText passwordEditText;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +48,7 @@ public class SignupActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.loginButton);
         formLayout = findViewById(R.id.formLayout);
         genderRadioGroup = findViewById(R.id.genderRadioGroup);
-        passwordEditText=findViewById(R.id.passwordEditText);
+        passwordEditText = findViewById(R.id.passwordEditText);
 
         dobButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +58,22 @@ public class SignupActivity extends AppCompatActivity {
         });
 
         weightSeekBar.setMax(300);
+        weightValueTextView.setText("0 kg");
+
+        weightSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                weightValueTextView.setText(progress + " kg");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +83,7 @@ public class SignupActivity extends AppCompatActivity {
                 String dob = dobButton.getText().toString().trim();
                 String email = emailEditText.getText().toString().trim();
                 String phone = phoneEditText.getText().toString().trim();
-                String pass=passwordEditText.getText().toString().trim();
+                String pass = passwordEditText.getText().toString().trim();
                 int weight = weightSeekBar.getProgress();
                 int selectedGenderId = genderRadioGroup.getCheckedRadioButtonId();
 
@@ -111,25 +125,28 @@ public class SignupActivity extends AppCompatActivity {
                     } else {
                         gender = "Female";
                     }
-                    if (TextUtils.isEmpty(name)) {
+
+                    if (TextUtils.isEmpty(pass)) {
                         isEmptyField = true;
                         passwordEditText.setError(getString(R.string.warning_empty_field));
+                    } else {
+                        pass = generateHash(pass);
                     }
 
-                    String password = generateHash(passwordEditText.getText().toString().trim());
+                    if (!isEmptyField) {
+                        saveUserData(email, pass);
 
-                    saveUserData(email, password);
-
-                    String message = "Name: " + name + "\n" +
-                            "Age: " + age + "\n" +
-                            "Date of Birth: " + dob + "\n" +
-                            "Gender: " + gender + "\n" +
-                            "Email: " + email + "\n" +
-                            "Phone: " + phone + "\n" +
-                            "Weight: " + weight + " kg";
-                    Toast.makeText(SignupActivity.this, message, Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(SignupActivity.this, "Please fill all the required fields.", Toast.LENGTH_SHORT).show();
+                        String message = "Name: " + name + "\n" +
+                                "Age: " + age + "\n" +
+                                "Date of Birth: " + dob + "\n" +
+                                "Gender: " + gender + "\n" +
+                                "Email: " + email + "\n" +
+                                "Phone: " + phone + "\n" +
+                                "Weight: " + weight + " kg";
+                        Toast.makeText(SignupActivity.this, message, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(SignupActivity.this, "Please fill all the required fields.", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
