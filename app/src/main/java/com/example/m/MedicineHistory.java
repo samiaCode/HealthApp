@@ -1,12 +1,19 @@
 package com.example.m;
 
-import static com.example.m.MedicineAddEditActivity.FILE_NAME;
+
+import static com.example.m.MedicineActivity.PREFS_NAME;
+import static com.example.m.MedicineActivity.PREF_MEDICINES;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -14,43 +21,38 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import Model.Medicine;
 
 public class MedicineHistory extends AppCompatActivity {
     private ListView medList;
-    private ArrayAdapter<Medicine> medAdapter;
-    private ArrayList<Medicine> medicines;
+    private ArrayAdapter<String> medAdapter;
+    private ArrayList<String> medicines;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medicine_history);
 
         medList = findViewById(R.id.medList);
-        medicines = new ArrayList<>();
 
-        try {
-            FileInputStream fis = openFileInput(FILE_NAME);
-            InputStreamReader isr = new InputStreamReader(fis);
-            BufferedReader br = new BufferedReader(isr);
-            String temp = "";
-            String text ="";
-            int i =0;
-            while((temp=br.readLine())!=null){
-                medicines.add(i, new Medicine(temp));
-                i++;
-            }
-            br.close();
-            isr.close();
-            fis.close();
-        }catch (FileNotFoundException e){
-            e.printStackTrace();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        medicines = loadMedicines();
+
+        if (medicines != null && !medicines.isEmpty()) {
+            medAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, medicines);
+
+            medList.setAdapter(medAdapter);
+        } else {
+            Toast.makeText(this, "No medicines found", Toast.LENGTH_SHORT).show();
+            finish();
         }
-        medAdapter = new ArrayAdapter<Medicine>(this, com.airbnb.lottie.R.layout.support_simple_spinner_dropdown_item,medicines);
+    }
 
-
-        medList.setAdapter(medAdapter);
+    private ArrayList<String> loadMedicines() {
+        SharedPreferences sharedPreferences = getSharedPreferences(MedicineActivity.PREFS_NAME, Context.MODE_PRIVATE);
+        Set<String> medicineSet = sharedPreferences.getStringSet(MedicineActivity.PREF_MEDICINES, new HashSet<String>());
+        return new ArrayList<>(medicineSet);
     }
 }

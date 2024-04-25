@@ -37,11 +37,14 @@ public class MedicineRecViewAdapter extends RecyclerView.Adapter<MedicineRecView
         return medicines.size();
     }
 
-    public void setMedicines(ArrayList<Medicine> medicines) {
-        this.medicines = medicines;
+    public void setMedicines(ArrayList<String> medicineNames) {
+        medicines.clear();
+        for (String name : medicineNames) {
+            Medicine medicine = new Medicine(name);
+            medicines.add(medicine);
+        }
         notifyDataSetChanged();
     }
-
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         private TextView medicineName;

@@ -31,25 +31,20 @@ public class MedicineAddEditActivity extends AppCompatActivity {
     private TextView timeTV, dateTV;
     private Button timeBTN, dateBTN, saveMedBTN;
     private EditText medET;
-    Date date;
-    public static final String FILE_NAME = "Medicines";
+    private static final int REQUEST_CODE_MEDICINE_ADDED = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medicine_add_edit);
 
-        timeTV = (TextView) findViewById(R.id.timeTv);
-        timeBTN = (Button) findViewById(R.id.setTimeBTN);
-        dateTV = (TextView) findViewById(R.id.dateTv);
-        dateBTN = (Button) findViewById(R.id.setDateBTN);
-        medET = (EditText) findViewById(R.id.medET);
-        saveMedBTN = (Button) findViewById(R.id.saveMedBTN);
-        /*
-        SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
-        String currentDateAndTime = df.format(new Date());
-        ed.setText(currentDateAndTime);
+        timeTV = findViewById(R.id.timeTv);
+        timeBTN = findViewById(R.id.setTimeBTN);
+        dateTV = findViewById(R.id.dateTv);
+        dateBTN = findViewById(R.id.setDateBTN);
+        medET = findViewById(R.id.medET);
+        saveMedBTN = findViewById(R.id.saveMedBTN);
 
-         */
         timeBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,43 +64,14 @@ public class MedicineAddEditActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String medName = medET.getText().toString();
 
-                try {
-                    File file = new File(getFilesDir(), FILE_NAME);
-                    if(file.exists()){
-                        file.createNewFile();
-                    }
-                    FileOutputStream fileout = new FileOutputStream(file, true);
-                    PrintWriter pw = new PrintWriter(fileout);
-                    pw.println(medName);
-                    pw.close();
-                    fileout.close();
-
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                NotificationCompat.Builder builder =new NotificationCompat.Builder(MedicineAddEditActivity.this,	DEFAULT_CHANNEL_ID)
-                        .setSmallIcon(R.drawable.medication_liquid_24)
-                        .setContentTitle("Don't Forget your Medicine!")
-                        .setContentText(medET.getText().toString())
-                        .setStyle(new NotificationCompat.BigTextStyle()
-                                .bigText(""))
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-                Intent intent = new Intent(MedicineAddEditActivity.this, MedicineActivity.class);
-                startActivity(intent);
-
-
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("newMedicine", medName);
+                setResult(RESULT_OK, resultIntent);
+                finish();
             }
         });
 
-
-
-
-
-
-    }
+}
     private void openTimeDialog(){
         TimePickerDialog timeDial = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override

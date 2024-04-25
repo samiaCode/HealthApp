@@ -28,7 +28,6 @@ public class mainscreen extends AppCompatActivity {
         historyPage = findViewById(R.id.medHistory);
         medicinePage = findViewById(R.id.medicinePage);
         flipper = findViewById(R.id.flipper);
-        logoutButton = findViewById(R.id.logoutButton);
 
 
 
@@ -64,13 +63,6 @@ public class mainscreen extends AppCompatActivity {
             }
         });
 
-        logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mainscreen.this, LoginActivity.class);
-                startActivity(intent);
-            }
-        });
 
         int imgArray[] = {R.drawable.slide1, R.drawable.slide2, R.drawable.slide3, R.drawable.slide4, R.drawable.slide5, R.drawable.slide6};
         for (int img : imgArray) {
